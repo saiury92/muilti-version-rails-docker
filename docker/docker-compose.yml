@@ -1,0 +1,80 @@
+version: '3.5'
+services:
+  db.dev:
+    image: mysql:5.6.26
+    container_name: db_dev
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+    networks:
+      default:
+        ipv4_address: 172.69.0.2
+  redis.dev:
+    image: redis:latest
+    container_name: redis_dev
+    ports:
+      - 6379:6379
+    networks:
+      default:
+        ipv4_address: 172.69.0.5
+  phpmyadmin.dev:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_dev
+    links:
+      - db.dev:mysql
+    environment:
+      PMA_HOST: db.dev
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 8888:80
+    networks:
+      default:
+        ipv4_address: 172.69.0.7
+    depends_on:
+      - db.dev
+  v3.web.dev:
+    build:
+      context: ../
+      dockerfile: docker/v3/Dockerfile
+    container_name: v3_web_dev
+    command: bash -c "rm -f tmp/pids/server.pid && bash"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ../projects/v3/:/projects/v3
+    ports:
+      - 3003:3000
+    networks:
+      default:
+        ipv4_address: 172.69.0.3
+    depends_on:
+      - db.dev
+      - redis.dev
+  v4.web.dev:
+    build:
+      context: ../
+      dockerfile: docker/v4/Dockerfile
+    container_name: v4_web_dev
+    command: bash -c "rm -f tmp/pids/server.pid && bash"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ../projects/v4/:/projects/v4
+    ports:
+      - 3004:3000
+    networks:
+      default:
+        ipv4_address: 172.69.0.4
+    depends_on:
+      - db.dev
+      - redis.dev
+networks:
+  default:
+    name: all_version_network
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: 'false'
+    ipam:
+      config:
+        - subnet: 172.69.0.0/16
