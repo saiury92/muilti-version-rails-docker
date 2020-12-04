@@ -10,4 +10,4 @@ default: &default
 
 development:
   <<: *default
-  database: v4_web_dev
+  database: v3_web_dev

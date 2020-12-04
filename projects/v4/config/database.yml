@@ -11,4 +11,4 @@ default: &default
 
 development:
   <<: *default
-  database: v3_web_dev
+  database: v4_web_dev
