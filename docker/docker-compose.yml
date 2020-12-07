@@ -17,7 +17,7 @@ services:
       - 6379:6379
     networks:
       default:
-        ipv4_address: 172.69.0.5
+        ipv4_address: 172.69.0.4
   phpmyadmin.dev:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin_dev
@@ -30,7 +30,7 @@ services:
       - 8888:80
     networks:
       default:
-        ipv4_address: 172.69.0.7
+        ipv4_address: 172.69.0.5
     depends_on:
       - db.dev
   v3.web.dev:
@@ -51,27 +51,27 @@ services:
     depends_on:
       - db.dev
       - redis.dev
-  v4.web.dev:
+  v6.web.dev:
     build:
       context: ../
-      dockerfile: docker/v4/Dockerfile
-    container_name: v4_web_dev
+      dockerfile: docker/v6/Dockerfile
+    container_name: v6_web_dev
     command: bash -c "rm -f tmp/pids/server.pid && bash"
     tty: true
     stdin_open: true
     volumes:
-      - ../projects/v4/:/projects/v4
+      - ../projects/v6/:/projects/v6
     ports:
-      - 3004:3000
+      - 3006:3000
     networks:
       default:
-        ipv4_address: 172.69.0.4
+        ipv4_address: 172.69.0.6
     depends_on:
       - db.dev
       - redis.dev
 networks:
   default:
-    name: all_version_network
+    name: er_contract_network_example
     driver: bridge
     driver_opts:
       com.docker.network.enable_ipv6: 'false'
