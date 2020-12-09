@@ -1,10 +1,13 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+require 'action_controller/railtie'
+require 'dm-rails/railtie'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
+ActionController::Base.config.relative_url_root = ''
+# config.time_zone = 'Asia/Bangkok'
 
 module V3
   class Application < Rails::Application

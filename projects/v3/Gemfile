@@ -31,3 +31,8 @@ gem 'mysql2', '0.2.1'
 # end
 #
 gem 'rake', '10.3.2'
+gem 'pry'
+
+%w{core constraints migrations transactions timestamps do-adapter rails active_model mysql-adapter validations}.each do |dmg|
+    gem "dm-#{dmg}"
+end
