@@ -1,0 +1,44 @@
+  <p id="notice"><%= notice %></p>
+  <h1>
+    <b>Title:</b>
+    <%= @post.title %>
+  </h1>
+  <h1>
+    <b>Content:</b>
+    <%= @post.content %>
+  </h1>
+  <table> 
+    <tr>
+    </tr>
+  <% @post.comments.order_desc.each do |comment| %>
+    <tr>
+      <td><strong><%= comment.comment %></strong></td>
+      <td><%= comment.created_at %></td>
+      <td><%= link_to 'Edit', edit_post_comment_path(comment.post, comment) %></td>
+      <td><%= link_to 'Destroy', post_comment_path(comment.post, comment), :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+  </br>
+  <h2> Comment </h2>
+    <%= form_for @comment, url: post_comments_path(post_id: @comment.post.id) do |ff| %>
+        <div class="field">
+          <%= ff.text_field :comment %>
+        </div>
+        <div class="actions">
+          <%= ff.submit %>
+        </div>
+    <% end %>
+
+  <%= link_to 'Edit', edit_post_path(@post) %> |
+  <%= link_to 'Back', posts_path %>
+  <style>
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 5px;
+    text-align: left;    
+  }
+  </style>
