@@ -32,6 +32,6 @@ end
 #
 gem 'rake', '10.3.2'
 # gem 'public_suffix', '3.0.2'
-%w{core validations constraints migrations transactions timestamps do-adapter rails active_model mysql-adapter}.each do |dmg|
+%w{core validations constraints devise migrations transactions timestamps do-adapter rails active_model mysql-adapter}.each do |dmg|
   gem "dm-#{dmg}"
 end

@@ -8,7 +8,7 @@ class Comment
   timestamps :created_at, :updated_at
 
   belongs_to :post
-  
+
   def self.order_desc
     all(:order => [:created_at.desc])
   end
